@@ -10,9 +10,9 @@ const DOI_TEMPLATE_ID = parseInt(process.env.BREVO_DLI_TEMPLATE_ID, 10);
 const LIST_ID_SUPERFOOD = parseInt(process.env.BREVO_LIST_ID_SUPERFOOD, 10);
 
 // Danke-Seite NACH Formular-Absenden (Frontend-URL!)
-const THANKYOU_URL = process.env.THANKYOU_URL; // z.B. https://checkliste.onrender.com/danke
+const THANKYOU_URL = "https://checkliste.onrender.com/danke";
 // Danke/Redirect NACH DOI-Klick (in der DOI-Mail)
-const REDIRECT_URL = process.env.BREVO_REDIRECT_URL; // z.B. https://checkliste.onrender.com/danke?confirmed=1
+const REDIRECT_URL = "https://checkliste.onrender.com/danke?confirmed=1";
 
 app.post("/api/subscribe-form", async (req, res) => {
   try {
@@ -34,10 +34,14 @@ app.post("/api/subscribe-form", async (req, res) => {
 
     // Immer zurück zur Danke-Seite deiner Landingpage
     return res.redirect(THANKYOU_URL);
-  } catch {
+  } catch (e) {
+    console.error("Fehler beim Versenden an Brevo:", e);
     return res.redirect(`${THANKYOU_URL}?error=server`);
   }
 });
 
-app.get("/", (_, res) => res.send("OK"));
-app.listen(process.env.PORT || 3000);
+// einfache Test-Route
+app.get("/", (_, res) => res.send("Brevo-Connector läuft 🚀"));
+app.listen(process.env.PORT || 3000, () =>
+  console.log("Server gestartet auf Port 3000")
+);
