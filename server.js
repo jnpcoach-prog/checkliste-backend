@@ -51,7 +51,7 @@ app.post("/api/subscribe-form", async (req, res) => {
       return res.redirect(`${THANKYOU_URL}?error=config`);
     }
 
-    const r = await fetch(`${BREVO_API}/contacts/doubleOptinConfirmation`, {
+    const r = await fetch(`${BREVO_API}/contacts`, {
       method: "POST",
       headers: { "api-key": API_KEY, "content-type": "application/json" },
       body: JSON.stringify(payload)
