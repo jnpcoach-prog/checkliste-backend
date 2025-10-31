@@ -26,6 +26,11 @@ if (!API_KEY) invalid("BREVO_API_KEY fehlt!");
 if (!Number.isInteger(DOI_TEMPLATE_ID)) invalid("BREVO_DLI_TEMPLATE_ID fehlt/ist ungültig!");
 if (!Number.isInteger(LIST_ID_SUPERFOOD)) invalid("BREVO_LIST_ID_SUPERFOOD fehlt/ist ungültig!");
 
+// Falls jemand /api/subscribe-form per GET aufruft, hübsch zur Danke-Seite umleiten
+app.get("/api/subscribe-form", (req, res) => {
+  return res.redirect("https://checkliste.onrender.com/danke?error=method");
+});
+
 app.post("/api/subscribe-form", async (req, res) => {
   try {
     const email = (req.body.email || "").trim();
